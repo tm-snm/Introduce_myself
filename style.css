@@ -1,0 +1,425 @@
+/* =============== Reset / Base =============== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--sticky-offset);
+  background: var(--bg);
+  color: var(--text);
+}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans JP", sans-serif;
+  color: #111;
+  background: #fafafa;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* 画像・メディア */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* フォーカス可視化（キーボード操作の味方） */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--brand-500);
+  outline-offset: 2px;
+}
+
+/* =============== Design Tokens =============== */
+:root {
+  /* 色 */
+  --bg: #fafafa;
+  --text: #111;
+  --muted: #555;
+  --border: #e5e7eb;
+  --brand-500: #2563eb;
+  --measure: 68ch;
+  --card: #ffffff;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  /* New: 段差用の“面”トークン */
+  --surface-0: var(--bg); /* ページ背景 */
+  --surface-1: var(--card); /* カード面 */
+  --surface-2: color-mix(in oklab, var(--brand-500) 6%, var(--bg)); /* 薄い帯 */
+  color-scheme: light dark;
+
+  /* 余白（4の倍数基準） */
+  --s-1: 0.25rem; /* 4px  */
+  --s-2: 0.5rem; /* 8px  */
+  --s-3: 1rem; /* 16px */
+  --s-4: 1.5rem; /* 24px */
+  --s-5: 2rem; /* 32px */
+  --s-6: 3rem; /* 48px */
+
+  /* タイポ（clampで可変） */
+  --fz-0: clamp(0.875rem, 1vw, 0.95rem);
+  --fz-1: clamp(1rem, 1.4vw, 1.125rem);
+  --fz-2: clamp(1.25rem, 2vw, 1.5rem);
+  --fz-3: clamp(1.5rem, 3vw, 2rem);
+
+  /* レイアウト */
+  --container: 72rem; /* 1152px */
+  --sticky-offset: 3.5rem; /* 仮のナビ高。後述のJSで実測反映も可 */
+}
+
+/*2025/1013追加。hero,proseクラス*/
+.hero {
+  text-align: center;
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+.prose {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+
+/* ヒーローの見栄え */
+.btn {
+  /* 共通ベース */
+  display: inline-flex; /* 高さを揃えやすい */
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  padding: 0.75rem 1rem; /* ボタンの高さ/横幅の基準 */
+  min-height: 2.75rem; /* a と button の高さを強制的に揃える */
+  line-height: 1; /* UA由来の差を消す */
+  font: inherit; /* フォント差異を解消 */
+  text-decoration: none; /* aの下線などを排除 */
+  border-radius: 0.7rem;
+  cursor: pointer;
+
+  /* UAスタイルのリセット（button対策） */
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid transparent; /* 枠幅を揃える。outline版と高さが一致する */
+  background: var(--brand-500);
+  color: #fff; /* 無印ボタンの文字色を明示 */
+  transition: transform 0.06s var(--ease), opacity 0.2s var(--ease);
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn.outline {
+  background: transparent;
+  color: var(--brand-500);
+  border-color: color-mix(in oklab, var(--brand-500) 55%, transparent);
+}
+.hero .cta {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.profile-grid {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 48rem) {
+  .profile-grid {
+    grid-template-columns: 220px 1fr;
+    align-items: start;
+  }
+}
+.profile-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+}
+
+/*4) セクションごとに“空気”を変える（薄い帯）
+延々と白カードが続くのを避け、交互に淡い背景を敷く。*/
+.section-alt {
+  background: color-mix(in oklab, var(--brand-500) 6%, var(--bg));
+}
+.section {
+  padding-block: clamp(2rem, 5vw, 3rem);
+}
+.section > .inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-inline: var(--s-4);
+}
+
+/* ダークモード（お好みで） */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b0b0c;
+    --card: #121214;
+    --text: #f5f5f5;
+    --muted: #b8b8b8;
+    --border: #27272a;
+    --brand-500: #60a5fa;
+    /* New: ダークは帯を“濃いめ”にしないと沈むので 14% 前後から開始 */
+    --surface-0: var(--bg);
+    --surface-1: var(--card);
+    --surface-2: color-mix(in oklab, var(--brand-500) 40%, var(--bg));
+  }
+}
+@supports not (background: color-mix(in oklab, white 50%, black)) {
+  .section-alt {
+    /* brand色 10%をbgに重ねる簡易フォールバック */
+    background: linear-gradient(
+        0deg,
+        rgba(96, 165, 250, 0.1),
+        rgba(96, 165, 250, 0.1)
+      ),
+      var(--bg);
+  }
+}
+
+/* =============== Layout =============== */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--fz-1);
+}
+header,
+nav,
+main,
+footer {
+  padding-inline: var(--s-4);
+}
+main {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-block: var(--s-5);
+}
+main > section[id],
+:where(h2, h3)[id] {
+  scroll-margin-top: var(--sticky-offset);
+}
+main > section p {
+  max-width: var(--measure);
+}
+header,
+footer {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+footer {
+  border-top: 1px solid var(--border);
+  border-bottom: none;
+}
+
+/* ページタイトル */
+h1 {
+  font-size: var(--fz-3);
+  margin: 0;
+  padding-block: var(--s-4);
+}
+h2 {
+  font-size: var(--fz-2);
+  margin: 0 0 0.5rem;
+}
+.lead {
+  color: var(--muted);
+  margin: 0 0 1.25rem;
+}
+.section h2::after {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 3px;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--brand-500) 60%, transparent);
+  margin-top: 0.5rem;
+  opacity: 0.9;
+}
+h3 {
+  font-size: 1.1rem;
+  margin: var(--s-4) 0 var(--s-2);
+  color: var(--muted);
+}
+p,
+li,
+dd,
+td {
+  font-size: var(--fz-1);
+}
+
+/* セクション間の余白 */
+section {
+  padding-block: var(--s-3);
+  border-bottom: 1px solid var(--border);
+}
+section:last-of-type {
+  border-bottom: none;
+}
+
+/* =============== Skip Link =============== */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  background: var(--card);
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* =============== Nav =============== */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--card);
+  background: color-mix(in oklab, var(--card) 85%, transparent);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: saturate(120%) blur(6px);
+}
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: var(--s-2) 0;
+  display: flex;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+nav a {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.55rem 0.85rem;
+  border-radius: 0.6rem;
+}
+nav a:hover {
+  background: rgba(37, 99, 235, 0.08);
+  background: color-mix(in oklab, var(--brand-500) 12%, transparent);
+}
+nav a[aria-current="page"] {
+  background: rgba(37, 99, 235, 0.08);
+  background: color-mix(in oklab, var(--brand-500) 16%, transparent);
+  outline: 2px solid color-mix(in oklab, var(--brand-500) 45%, transparent);
+}
+
+/* =============== Profile image =============== */
+img[alt*="プロフィール画像"] {
+  width: 200px;
+  height: auto;
+  border-radius: 0.6rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* =============== Definition list (経歴) =============== */
+dl {
+  display: grid;
+  grid-template-columns: 8em 1fr;
+  gap: 0.5rem 1rem;
+}
+dt {
+  font-weight: 600;
+}
+dd {
+  margin: 0;
+}
+
+/* =============== Lists =============== */
+ul,
+ol {
+  padding-left: 1.2rem;
+}
+li + li {
+  margin-top: 0.25rem;
+}
+
+/* =============== Table (経験プロジェクト) =============== */
+.table-wrap {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+}
+caption {
+  caption-side: top;
+  text-align: left;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+thead th {
+  position: static;
+  top: calc(var(--sticky-offset)); /* ナビ高 + 1pxぶん余白を確保 */
+  background: var(--card);
+  border-bottom: 2px solid var(--border);
+  z-index: 5; /* 行より上に重ねる */
+  box-shadow: 0 1px 0 var(--border); /* 固定時の“仕切り線”を明確に */
+  padding-bottom: 0.75rem;
+}
+th,
+td {
+  padding: 0.6rem 0.8rem;
+  padding-top: 0.7rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+td:first-child {
+  white-space: nowrap;
+}
+tbody tr:hover {
+  background: rgba(37, 99, 235, 0.08);
+  background: color-mix(in oklab, var(--brand-500) 8%, transparent);
+}
+
+/* =============== Footer =============== */
+footer {
+  padding-block: var(--s-4);
+}
+footer p {
+  margin: 0;
+  font-size: var(--fz-0);
+  color: var(--muted);
+}
+
+footer .to-top {
+  display: inline-block;
+  margin-top: var(--s-2);
+  text-decoration: none;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.6rem;
+}
+footer .to-top:hover {
+  background: color-mix(in oklab, var(--brand-500) 12%, transparent);
+}
+
+/* =============== Responsive tweaks =============== */
+@media (min-width: 48rem) {
+  main {
+    padding-block: var(--s-6);
+  }
+  nav ul {
+    gap: var(--s-4);
+  }
+}

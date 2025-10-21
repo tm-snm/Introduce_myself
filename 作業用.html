@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>自己紹介Webページ</title>
+    <meta
+      name="description"
+      content="増賀拓士の自己紹介ページ。RPAエンジニア（UiPath）。VB.NET/VBA、HTML/CSS/JS学習中。プロジェクト実績や趣味を掲載。"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <a href="#main" class="skip-link">メインコンテンツへ移動</a>
+    <header id="top" class="hero">
+      <h1>増賀 拓士</h1>
+      <p>RPAエンジニア × フロント学習中</p>
+      <div class="cta">
+        <a class="btn" href="#skills">スキルを見る</a>
+        <a class="btn outline" href="#contact">連絡する</a>
+      </div>
+    </header>
+
+    <nav aria-label="メインナビゲーション">
+      <ul>
+        <li><a href="#profile">プロフィール</a></li>
+        <li><a href="#skills">スキル</a></li>
+        <li><a href="#private">プライベート</a></li>
+      </ul>
+    </nav>
+
+    <!--メイン-->
+    <main id="main">
+      <!--プロフィール-->
+      <section id="profile" aria-labelledby="profile-title" class="card">
+        <div class="profile-grid">
+          <div class="profile-photo">
+            <img
+              src="profile_image.png"
+              alt="プロフィール画像: 増賀 拓士"
+              width="400"
+              height="400"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="profile-body prose">
+            <h2 id="profile-title">プロフィール</h2>
+
+            <section>
+              <h3>名前</h3>
+              <p>増賀 拓士（ますが たくと）</p>
+            </section>
+
+            <section>
+              <h3>経歴</h3>
+              <dl>
+                <dt>生年月日</dt>
+                <dd><time datetime="1998-03-09">1998年3月9日</time></dd>
+                <dt>出身地</dt>
+                <dd>埼玉県さいたま市西区</dd>
+                <dt>最終学歴</dt>
+                <dd>拓殖大学商学部経営学科 卒業</dd>
+              </dl>
+            </section>
+
+            <section id="contact">
+              <h3>所属会社</h3>
+              <p>
+                <a href="https://lib-co-ltd.com/">株式会社LIB</a>
+                (<time datetime="2024-12">2024年12月</time>入社)
+              </p>
+              <address>
+                <a
+                  href="mailto:t.masuga@lib-co-ltd.net?subject=WEBサイトからのお問い合わせ"
+                  >t.masuga@lib-co-ltd.net</a
+                >
+              </address>
+
+              <!--連絡先ボタン追加 -->
+              <div class="cta">
+                <a
+                  class="btn"
+                  href="mailto:t.masuga@lib-co-ltd.net?subject=WEBサイトからのお問い合わせ"
+                  >メールする</a
+                >
+                <button class="btn outline" id="copyMail">
+                  アドレスをコピー
+                </button>
+              </div>
+              <script>
+                document
+                  .getElementById("copyMail")
+                  ?.addEventListener("click", async () => {
+                    await navigator.clipboard.writeText(
+                      "t.masuga@lib-co-ltd.net"
+                    );
+                    alert("メールアドレスをコピーしました！");
+                  });
+              </script>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!--スキル-->
+      <section class="section section-alt">
+        <div class="inner">
+          <section id="skills" aria-labelledby="skills-title" class="card">
+            <h2 id="skills-title">スキル</h2>
+            <section>
+              <h3>経験プロジェクト</h3>
+              <div class="table-wrap">
+                <table>
+                  <caption>
+                    プロジェクト一覧
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">期間</th>
+                      <th scope="col">プロジェクト</th>
+                      <th scope="col">使用言語</th>
+                      <th scope="col">使用ツール</th>
+                      <th scope="col">開発工程</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><time datetime="2025-04">2025/4～現在</time></td>
+                      <td>服飾系商社での開発運用業務</td>
+                      <td>VB.NET / VBA</td>
+                      <td>UiPath Studio / Orchestrator / M365 / Access</td>
+                      <td>要件定義 / 設計 / 開発 / テスト / 運用保守</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <time datetime="2024-12">2024/12</time
+                        ><time datetime="2025-03">～2025/3</time>
+                      </td>
+                      <td>某HR企業 ロボット環境移行業務</td>
+                      <td>VB.NET</td>
+                      <td>UiPath Studio / Orchestrator / M365</td>
+                      <td>設計 / 開発 / テスト</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <time datetime="2023-07">2023/7</time
+                        ><time datetime="2024-11">～2024/11</time>
+                      </td>
+                      <td>某自動車製造メーカー UiPath内製開発支援</td>
+                      <td>VB.NET / VBA</td>
+                      <td>UiPath Studio / StudioX / Orchestrator / M365</td>
+                      <td>要件定義 / 設計 / 開発 / 運用保守</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section>
+              <h3>現在学習中</h3>
+              <p>HTML/CSS/JavaScript</p>
+            </section>
+          </section>
+        </div>
+      </section>
+
+      <!--プライベート-->
+      <section id="private" aria-labelledby="private-title" class="card">
+        <h2 id="private-title">プライベート</h2>
+
+        <section>
+          <h3>趣味</h3>
+          <ul>
+            <li>音楽</li>
+            <li>旅行</li>
+            <li>料理</li>
+            <li>ドライブ</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>好物</h3>
+          <ol>
+            <li>魚</li>
+            <li>寿司</li>
+            <li>カステラ</li>
+            <li>お酒</li>
+            <li>珈琲</li>
+          </ol>
+        </section>
+
+        <section>
+          <h3>実現したいこと</h3>
+          <p>マイホーム・マイカー</p>
+          <p>料理の上達</p>
+          <p>自宅で家庭菜園</p>
+          <p>47都道府県を旅行（現在22都道府県）</p>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; edit by Takuto Masuga</p>
+      <a href="#top" class="to-top">ページ上部へ移動</a>
+      <nav aria-label="フッターナビゲーション">
+        <ul>
+          <li><a href="#profile">プロフィール</a></li>
+          <li><a href="#skills">スキル</a></li>
+          <li><a href="#private">プライベート</a></li>
+        </ul>
+      </nav>
+    </footer>
+
+    <!--ページ内のリンクから#を削除する機能-->
+    <script>
+      document.addEventListener("click", (e) => {
+        const a = e.target.closest('a[href^="#"]');
+        if (!a || a.classList.contains("skip-link")) return;
+
+        const id = a.getAttribute("href");
+        const target = document.querySelector(id);
+        if (!target) return;
+
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", location.pathname + location.search);
+      });
+    </script>
+
+    <!--文字サイズや改行で高さが変わっても停止位置が合うように-->
+    <script>
+      const setStickyOffset = () => {
+        const nav = document.querySelector("nav");
+        if (!nav) return;
+        const h = nav.getBoundingClientRect().height;
+        document.documentElement.style.setProperty("--sticky-offset", h + "px");
+      };
+      window.addEventListener("load", setStickyOffset);
+      window.addEventListener("resize", setStickyOffset);
+    </script>
+
+    <!--読んでる章をナビで自動ハイライト-->
+    <script>
+      const navLinks = [...document.querySelectorAll('nav a[href^="#"]')];
+
+      // href -> [link, link, ...]
+      const group = new Map();
+      navLinks.forEach((a) => {
+        const href = a.getAttribute("href");
+        if (!group.has(href)) group.set(href, []);
+        group.get(href).push(a);
+      });
+
+      const targets = [
+        ...new Set(
+          navLinks
+            .map((a) => document.querySelector(a.getAttribute("href")))
+            .filter(Boolean)
+        ),
+      ];
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            const links = group.get("#" + e.target.id) || [];
+            if (e.isIntersecting) {
+              navLinks.forEach((a) => a.removeAttribute("aria-current"));
+              links.forEach((a) => a.setAttribute("aria-current", "page"));
+            }
+          });
+        },
+        { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+      );
+
+      targets.forEach((t) => io.observe(t));
+    </script>
+  </body>
+</html>
