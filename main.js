@@ -3,13 +3,14 @@ console.log("main.js loaded");
 /* =========================
   PW入力画面
 ========================= */
+const password = "1234";
 
-const password = "masuga";
+const input = prompt("パスワードを入力してください");
 
-const input = prompt("パスワードを入力");
-
-if (input !== password) {
-  document.body.innerHTML = "アクセス不可";
+if(input === password){
+  document.body.style.display = "block";
+}else{
+  document.body.innerHTML = "アクセス拒否";
 }
 /* =========================
    メールアドレスコピー（案①）
