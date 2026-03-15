@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
@@ -68,7 +68,13 @@
             <section id="contact">
               <h3>所属会社</h3>
               <p>
-                <a href="https://lib-co-ltd.com/">株式会社LIB</a>
+                <a
+                  href="https://lib-co-ltd.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-external
+                  >株式会社LIB</a
+                >
                 (<time datetime="2024-12">2024年12月</time>入社)
               </p>
               <address>
@@ -94,7 +100,7 @@
                   .getElementById("copyMail")
                   ?.addEventListener("click", async () => {
                     await navigator.clipboard.writeText(
-                      "t.masuga@lib-co-ltd.net"
+                      "t.masuga@lib-co-ltd.net",
                     );
                     alert("メールアドレスをコピーしました！");
                   });
@@ -111,6 +117,9 @@
             <h2 id="skills-title">スキル</h2>
             <section>
               <h3>経験プロジェクト</h3>
+              <button class="btn outline" id="toggleProjects">
+                表を非表示
+              </button>
               <div class="table-wrap">
                 <table>
                   <caption>
@@ -212,69 +221,9 @@
         </ul>
       </nav>
     </footer>
+    <!--トースト通知用-->
+    <div id="toast" role="status" aria-live="polite"></div>
 
-    <!--ページ内のリンクから#を削除する機能-->
-    <script>
-      document.addEventListener("click", (e) => {
-        const a = e.target.closest('a[href^="#"]');
-        if (!a || a.classList.contains("skip-link")) return;
-
-        const id = a.getAttribute("href");
-        const target = document.querySelector(id);
-        if (!target) return;
-
-        e.preventDefault();
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-        history.replaceState(null, "", location.pathname + location.search);
-      });
-    </script>
-
-    <!--文字サイズや改行で高さが変わっても停止位置が合うように-->
-    <script>
-      const setStickyOffset = () => {
-        const nav = document.querySelector("nav");
-        if (!nav) return;
-        const h = nav.getBoundingClientRect().height;
-        document.documentElement.style.setProperty("--sticky-offset", h + "px");
-      };
-      window.addEventListener("load", setStickyOffset);
-      window.addEventListener("resize", setStickyOffset);
-    </script>
-
-    <!--読んでる章をナビで自動ハイライト-->
-    <script>
-      const navLinks = [...document.querySelectorAll('nav a[href^="#"]')];
-
-      // href -> [link, link, ...]
-      const group = new Map();
-      navLinks.forEach((a) => {
-        const href = a.getAttribute("href");
-        if (!group.has(href)) group.set(href, []);
-        group.get(href).push(a);
-      });
-
-      const targets = [
-        ...new Set(
-          navLinks
-            .map((a) => document.querySelector(a.getAttribute("href")))
-            .filter(Boolean)
-        ),
-      ];
-
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            const links = group.get("#" + e.target.id) || [];
-            if (e.isIntersecting) {
-              navLinks.forEach((a) => a.removeAttribute("aria-current"));
-              links.forEach((a) => a.setAttribute("aria-current", "page"));
-            }
-          });
-        },
-        { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
-      );
-
-      targets.forEach((t) => io.observe(t));
-    </script>
+    <script src="./main.js" defer></script>
   </body>
 </html>

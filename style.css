@@ -14,7 +14,12 @@ html {
 }
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans JP", sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    "Noto Sans JP",
+    sans-serif;
   color: #111;
   background: #fafafa;
   background: var(--bg);
@@ -83,39 +88,16 @@ img {
 
 /* ヒーローの見栄え */
 .btn {
-  /* 共通ベース */
-  display: inline-flex; /* 高さを揃えやすい */
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-
-  padding: 0.75rem 1rem; /* ボタンの高さ/横幅の基準 */
-  min-height: 2.75rem; /* a と button の高さを強制的に揃える */
-  line-height: 1; /* UA由来の差を消す */
-  font: inherit; /* フォント差異を解消 */
-  text-decoration: none; /* aの下線などを排除 */
+  display: inline-block;
+  padding: 0.75rem 1rem;
   border-radius: 0.7rem;
-  cursor: pointer;
-
-  /* UAスタイルのリセット（button対策） */
-  -webkit-appearance: none;
-  appearance: none;
-  border: 1px solid transparent; /* 枠幅を揃える。outline版と高さが一致する */
   background: var(--brand-500);
-  color: #fff; /* 無印ボタンの文字色を明示 */
-  transition: transform 0.06s var(--ease), opacity 0.2s var(--ease);
+  text-decoration: none;
 }
-.btn:hover {
-  transform: translateY(-1px);
-}
-.btn:active {
-  transform: translateY(0);
-}
-
 .btn.outline {
   background: transparent;
   color: var(--brand-500);
-  border-color: color-mix(in oklab, var(--brand-500) 55%, transparent);
+  outline: 1px solid color-mix(in oklab, var(--brand-500) 55%, transparent);
 }
 .hero .cta {
   display: flex;
@@ -181,11 +163,8 @@ img {
 @supports not (background: color-mix(in oklab, white 50%, black)) {
   .section-alt {
     /* brand色 10%をbgに重ねる簡易フォールバック */
-    background: linear-gradient(
-        0deg,
-        rgba(96, 165, 250, 0.1),
-        rgba(96, 165, 250, 0.1)
-      ),
+    background:
+      linear-gradient(0deg, rgba(96, 165, 250, 0.1), rgba(96, 165, 250, 0.1)),
       var(--bg);
   }
 }
@@ -370,18 +349,15 @@ caption {
   margin-bottom: 0.5rem;
 }
 thead th {
-  position: static;
-  top: calc(var(--sticky-offset)); /* ナビ高 + 1pxぶん余白を確保 */
+  position: sticky;
+  top: var(--sticky-offset);
   background: var(--card);
   border-bottom: 2px solid var(--border);
-  z-index: 5; /* 行より上に重ねる */
-  box-shadow: 0 1px 0 var(--border); /* 固定時の“仕切り線”を明確に */
-  padding-bottom: 0.75rem;
+  z-index: 1;
 }
 th,
 td {
   padding: 0.6rem 0.8rem;
-  padding-top: 0.7rem;
   border-bottom: 1px solid var(--border);
   vertical-align: top;
 }
@@ -391,6 +367,36 @@ td:first-child {
 tbody tr:hover {
   background: rgba(37, 99, 235, 0.08);
   background: color-mix(in oklab, var(--brand-500) 8%, transparent);
+}
+
+/*=================#toast================*/
+#toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: 8px;
+
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+  z-index: 1000;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 /* =============== Footer =============== */
