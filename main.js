@@ -3,7 +3,7 @@ console.log("main.js loaded");
 /* =========================
   PW入力画面
 ========================= */
-const password = "1234";
+const password = "masuga";
 
 const input = prompt("パスワードを入力してください");
 
