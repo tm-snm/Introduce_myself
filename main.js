@@ -1,6 +1,17 @@
 console.log("main.js loaded");
 
 /* =========================
+  PW入力画面
+========================= */
+
+const password = "masuga";
+
+const input = prompt("パスワードを入力");
+
+if (input !== password) {
+  document.body.innerHTML = "アクセス不可";
+}
+/* =========================
    メールアドレスコピー（案①）
 ========================= */
 const copyBtn = document.getElementById("copyMail");
